@@ -1,10 +1,10 @@
 const modals = () => {
     //создать функцию для реализации 1 и 2 пункта ТЗ
-    function modal(openClass, modalClass, closeClass) {
+    function modal(openSelector, modalSelector, closeSelector) {
         //сначала получить элементы со страницы
-        const open = document.querySelectorAll(openClass);
-        const modal = document.querySelector(modalClass);
-        const close = document.querySelector(closeClass);
+        const open = document.querySelectorAll(openSelector);
+        const modal = document.querySelector(modalSelector);
+        const close = document.querySelector(closeSelector);
 
         
         
@@ -48,7 +48,8 @@ const modals = () => {
     //2 пункт
     modal('.phone_link', '.popup', '.popup_close');
     //10 пункт
-    showModalAfterOpen('.popup', 6000);
+    //showModalAfterOpen('.popup', 6000);
+    
 };
 
 export default modals;
