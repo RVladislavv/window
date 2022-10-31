@@ -6,6 +6,7 @@ const browsersync = require("browser-sync");
 //const sass = require('gulp-sass')(require('sass'));
 
 const dist = "./dist/"; //выходной путь
+//const dist = '/OSPanel/domains/test/';
 
 gulp.task("copy-html", () => {
     return gulp.src("./src/index.html")

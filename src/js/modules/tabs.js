@@ -1,4 +1,4 @@
-const tabs = (headerSelector, tabSelector, contentSelector, activeClass) => {
+const tabs = (headerSelector, tabSelector, contentSelector, activeClass, display = 'block') => {
     //заголовок, таб, контент, активный класс - селекторы
     const header = document.querySelector(headerSelector);
     const tab = document.querySelectorAll(tabSelector);
@@ -20,7 +20,7 @@ const tabs = (headerSelector, tabSelector, contentSelector, activeClass) => {
         //у таба добавляем класс активности
         tab[i].classList.add(activeClass);
         //у i-того элемента из массива контента ставим дисплей блок
-        content[i].style.display = 'block';
+        content[i].style.display = display;
     }
 
     hideTabContent();

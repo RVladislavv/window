@@ -1,10 +1,11 @@
 const modals = () => {
     //создать функцию для реализации 1 и 2 пункта ТЗ
-    function modal(openSelector, modalSelector, closeSelector) {
+    function modal(openSelector, modalSelector, closeSelector, closeClickOverlay = true) {
         //сначала получить элементы со страницы
         const open = document.querySelectorAll(openSelector);
-        const modal = document.querySelector(modalSelector);
+        const mod = document.querySelector(modalSelector);
         const close = document.querySelector(closeSelector);
+        const windows = document.querySelectorAll('[data-modal]'); //передача дата атрибута, чтоб закрыть все окна
 
         
         
@@ -14,21 +15,34 @@ const modals = () => {
                 if(e.target) {
                     e.preventDefault();
                 }
-                modal.style.display = 'block';
+                //закрытие всех модальных окон(если например в следствии перехода/попапа вылезло несколько)
+                windows.forEach(item => {
+                    item.style.display = 'none';
+                });
+
+                mod.style.display = 'block';
                 //чтоб не листалось всё для бади сделать стайл оверфлоу в хайдн
                 document.body.style.overflow = 'hidden';
             });
         });
         
         close.addEventListener('click', () => {
-            modal.style.display = 'none';
+            mod.style.display = 'none';
             document.body.style.overflow = '';
         });
 
-        modal.addEventListener('click', (e) => {
+        windows.forEach(item => {
+            item.style.display = 'none';
+        });
+
+        mod.addEventListener('click', (e) => {
             //тут как раз определяется подложка, а само модальное окно уже будет то, что внутри
-            if(e.target === modal) {
-                modal.style.display = 'none';
+            if(e.target === mod && closeClickOverlay) { //последнее - параметр, если не надо закрывать
+                windows.forEach(item => {
+                    item.style.display = 'none';
+                });
+
+                mod.style.display = 'none';
                 document.body.style.overflow = '';
             }
         });
@@ -49,7 +63,10 @@ const modals = () => {
     modal('.phone_link', '.popup', '.popup_close');
     //10 пункт
     //showModalAfterOpen('.popup', 6000);
-    
+    //6
+    modal('.popup_calc_btn', '.popup_calc', '.popup_calc_close');
+    modal('.popup_calc_button', '.popup_calc_profile', '.popup_calc_profile_close', false);
+    modal('.popup_calc_profile_button', '.popup_calc_end', '.popup_calc_end_close');
 };
 
 export default modals;
