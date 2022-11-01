@@ -6,7 +6,7 @@ const modals = () => {
         const mod = document.querySelector(modalSelector);
         const close = document.querySelector(closeSelector);
         const windows = document.querySelectorAll('[data-modal]'); //передача дата атрибута, чтоб закрыть все окна
-
+        const scroll = calcScroll();
         
         
         open.forEach(item => {
@@ -23,17 +23,21 @@ const modals = () => {
                 mod.style.display = 'block';
                 //чтоб не листалось всё для бади сделать стайл оверфлоу в хайдн
                 document.body.style.overflow = 'hidden';
+                //при исчезновении прокрутки, чтоб страница не дёргалась
+                document.body.style.marginRight = `${scroll}px`;
             });
         });
         
         close.addEventListener('click', () => {
+            windows.forEach(item => {
+                item.style.display = 'none';
+            });
             mod.style.display = 'none';
             document.body.style.overflow = '';
+            document.body.style.marginRight = `0px`;
         });
 
-        windows.forEach(item => {
-            item.style.display = 'none';
-        });
+        
 
         mod.addEventListener('click', (e) => {
             //тут как раз определяется подложка, а само модальное окно уже будет то, что внутри
@@ -44,6 +48,7 @@ const modals = () => {
 
                 mod.style.display = 'none';
                 document.body.style.overflow = '';
+                document.body.style.marginRight = `0px`;
             }
         });
     
@@ -55,6 +60,23 @@ const modals = () => {
             module.style.display = 'block';
             document.body.style.overflow = 'hidden';
         }, time);
+    }
+
+    //фича, чтоб сделать отступ справа, при вылезании модальных окон, 
+    //чтоб не дергалась страница при исчезании прокрутки
+    function calcScroll() {
+        let div = document.createElement('div');
+
+        div.style.width = '50px';
+        div.style.height = '50px';
+        div.style.overflowY = 'scroll';
+        div.style.visibility = 'hidden';
+
+        document.body.appendChild(div);
+        let scrollWidth = div.offsetWidth - div.clientWidth;
+        div.remove();
+
+        return scrollWidth;
     }
 
     //1 пункт
